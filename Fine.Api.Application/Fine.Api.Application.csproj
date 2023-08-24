@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fine.Api.Business\Fine.Api.Business.csproj" />
+    <ProjectReference Include="..\Fine.Api.DataAccess.Contracts\Fine.Api.DataAccess.Contracts.csproj" />
+    <ProjectReference Include="..\Fine.Api.DataAcess\Fine.Api.DataAcess.csproj" />
+    <ProjectReference Include="..\Fine.Api.Exceptions\Fine.Api.Exceptions.csproj" />
+  </ItemGroup>
+
+</Project>
