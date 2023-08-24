@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -12,8 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fine.Api.Application\Fine.Api.Application.csproj" />
-    <ProjectReference Include="..\Fine.Api.CrossCutting\Fine.Api.CrossCutting.csproj" />
+    <ProjectReference Include="..\FineApi.Dal\FineApi.Dal.csproj" />
+    <ProjectReference Include="..\FineApi.Domain\FineApi.Domain.csproj" />
+    <ProjectReference Include="..\FineApi.Service\FineApi.Service.csproj" />
   </ItemGroup>
 
 </Project>

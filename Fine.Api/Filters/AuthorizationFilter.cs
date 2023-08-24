@@ -4,20 +4,18 @@ using System.Security.Claims;
 
 
 
-namespace Fine.Api.Filters
+namespace Fine.Api.Filters;
+public class AuthorizationFilter : Attribute, IAuthorizationFilter
 {
-    public class AuthorizationFilter : Attribute, IAuthorizationFilter
+    public void OnAuthorization(AuthorizationFilterContext context)
     {
-        public void OnAuthorization(AuthorizationFilterContext context)
+        if (!IsUserAuthorized(context.HttpContext.User))
         {
-            if (!IsUserAuthorized(context.HttpContext.User))
-            {
-                context.Result = new StatusCodeResult(403);
-            }
+            context.Result = new StatusCodeResult(403);
         }
-        private bool IsUserAuthorized(ClaimsPrincipal user)
-        {
-            return user.IsInRole("Technical Department Manager");
-        }
+    }
+    private bool IsUserAuthorized(ClaimsPrincipal user)
+    {
+        return user.IsInRole("Technical Department Manager");
     }
 }

@@ -1,28 +1,27 @@
-using Fine.Api.CrossCutting;
-using Fine.Api.Extensions;
+using FineApi.Dal;
+using FineApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddFineDbContext(builder.Configuration);
-builder.Services.PolicyRegistration(builder.Configuration);
-builder.Services.AddCommonServices();
+
+builder.Services.AddPersistenceService(builder.Configuration);
+builder.Services.AddServices(builder.Configuration);
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddSwagger();
+    builder.Services.AddSwaggerGen();
 }
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors("DevCors");
-    app.UseSwaggerWithUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
