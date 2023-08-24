@@ -19,6 +19,7 @@ public class UserCarController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status417ExpectationFailed)]
     public async Task<IActionResult> GetAllUserCars()
     {
         try
@@ -28,11 +29,15 @@ public class UserCarController : ControllerBase
         }
         catch (NoUserCarInformationException ex)
         {
-            return BadRequest(ex.Message);
+            return NotFound();
         }
-        catch (Exception)
+        catch (InvalidOperationException ex)
         {
-            return StatusCode(500, "an error occured");
+            return StatusCode(417, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
         }
     }
 }

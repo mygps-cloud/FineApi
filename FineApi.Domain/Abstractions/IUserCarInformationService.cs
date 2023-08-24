@@ -5,6 +5,6 @@ namespace FineApi.Domain.Abstractions
 {
     public interface IUserCarInformationService
     {
-        Task<IList<UserCarInformationDto>> GetAllUserCarInformation();
+        ValueTask<UserCarInformationDto> GetAllUserCarInformation();
     }
 }
