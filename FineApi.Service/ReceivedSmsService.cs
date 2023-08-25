@@ -13,8 +13,6 @@ public class ReceivedSmsService : IReceivedSmsService
     }
     public async Task UpdateReceivedSms(List<FineDataDto> data)
     {
-       
-
         foreach (var fineData in data)
         {
             var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.SingleAsync(x => x.ReceiptNumber == fineData.ReceiptNumber);
