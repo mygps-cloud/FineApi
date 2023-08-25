@@ -1,9 +1,10 @@
+using Fine.Api;
 using FineApi.Dal;
 using FineApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddServices(builder.Configuration);
 builder.Services.AddAuthorization();

@@ -1,5 +1,6 @@
 ﻿
 using FineApi.Domain.Abstractions;
+using FineApi.Domain.DTOs;
 using FineApi.Service.Exception;
 
 namespace FineApi.Service;
@@ -10,14 +11,19 @@ public class ReceivedSmsService : IReceivedSmsService
     {
         _unitOfWorkRepository = unitOfWorkRepository;
     }
-    public async Task UpdateReceivedSms(string receiptNumber, bool paid)
+    public async Task UpdateReceivedSms(List<FineDataDto> data)
     {
-        var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.SingleAsync(x => x.ReceiptNumber == receiptNumber);
-        if (receivedSms == null) throw new NoReceivedSmsOnThisReceiptNumberException();
-        
-        receivedSms.FineStatus = paid ? Domain.Enums.FineStatus.Paid : Domain.Enums.FineStatus.Unpaid;
+       
 
-        await _unitOfWorkRepository.ReceivedSmsRepository.UpdateAsync(receivedSms);
+        foreach (var fineData in data)
+        {
+            var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.SingleAsync(x => x.ReceiptNumber == fineData.ReceiptNumber);
+            if (receivedSms == null) throw new NoReceivedSmsOnThisReceiptNumberException();
+            
+            receivedSms.FineStatus = fineData.Paid ? Domain.Enums.FineStatus.Paid : Domain.Enums.FineStatus.Unpaid;
+
+            await _unitOfWorkRepository.ReceivedSmsRepository.UpdateAsync(receivedSms);
+        }
         await _unitOfWorkRepository.SaveAsync();
     }
 }

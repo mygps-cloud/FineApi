@@ -1,5 +1,7 @@
-﻿namespace FineApi.Domain.Abstractions;
+﻿using FineApi.Domain.DTOs;
+
+namespace FineApi.Domain.Abstractions;
 public interface IReceivedSmsService
 {
-    Task UpdateReceivedSms(string receiptNumber, bool paid);
+    Task UpdateReceivedSms(List<FineDataDto> data);
 }
