@@ -1,7 +1,4 @@
-﻿
-using System.Globalization;
-using System.Text;
-using FineApi.Domain.Abstractions;
+﻿using FineApi.Domain.Abstractions;
 using FineApi.Domain.DTOs;
 using FineApi.Service.Exception;
 
@@ -16,9 +13,17 @@ public class ReceivedSmsService : IReceivedSmsService
     public async Task UpdateReceivedSms(List<FineDataDto> data)
     {
         string latinText;
+        string fineText="";
+        var userCarInformation = await _unitOfWorkRepository.UserCarInformationRepository.GetAll()!;
         foreach (var fineData in data)
         {
-            TransilateToGeorgian(fineData.ReceiptNumber,out latinText);
+            foreach (var carInformation in userCarInformation)
+            {
+                if (fineData.ReceiptNumber.Contains(carInformation.CarNumber)) 
+                    fineText=fineData.ReceiptNumber.Substring(0,
+                        fineData.ReceiptNumber.Length - carInformation.CarNumber.Length);
+            }
+            TransilateToGeorgian(fineText,out latinText);
             var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.SingleAsync(x => x.ReceiptNumber == latinText);
             if (receivedSms == null) throw new NoReceivedSmsOnThisReceiptNumberException();
             
@@ -35,10 +40,10 @@ public class ReceivedSmsService : IReceivedSmsService
         Dictionary<string, string> georgianToLatinMap =new Dictionary<string, string>
         {
             { "ა", "a" }, { "ბ", "b" }, { "გ", "g" }, { "დ", "d" }, { "ე", "e" }, { "ვ", "v" }, { "ზ", "z" },
-            { "თ", "t" }, { "ი", "i" }, { "კ", "k" }, { "ლ", "l" },
-            { "მ", "a" }, { "ნ", "n" }, { "ო", "o" }, { "პ", "p" }, { "ჟ", "zh" }, { "რ", "r" }, { "ს", "s" },
-            { "ტ", "t" }, { "უ", "u" }, { "ფ", "f" }, { "ქ", "q" }, { "ღ", "gh" },
-            { "ყ", "y" }, { "შ", "sh" }, { "ჩ", "ch" }, { "ც", "c" }, { "ძ", "dz" }, { "წ", "w" }, { "ჭ", "tch" },
+            { "თ", "t" }, { "ი", "i" }, { "კ", "k" }, { "ლ", "l" }, { "მ", "a" }, { "ნ", "n" }, { "ო", "o" },
+            { "პ", "p" }, { "ჟ", "zh" }, { "რ", "r" }, { "ს", "s" }, { "ტ", "t" }, { "უ", "u" }, { "ფ", "f" }, 
+            { "ქ", "q" }, { "ღ", "gh" }, { "ყ", "y" }, { "შ", "sh" }, { "ჩ", "ch" }, { "ც", "c" }, { "ძ", "dz" },
+            { "წ", "w" }, { "ჭ", "tch" },
             { "ხ", "kh" }, { "ჯ", "j" }
         };
         foreach (char georgianLetter in georgianText)
