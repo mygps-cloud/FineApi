@@ -16,4 +16,5 @@ public interface IGenericRepository<T> where T : class
     public Task<T?> GetByIdAsync(int id);
     public ValueTask UpdateAsync(T entity);
     public Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
+    public bool StateChanged();
 }

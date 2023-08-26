@@ -24,14 +24,17 @@ public class ReceivedSmsService : IReceivedSmsService
                         fineData.ReceiptNumber.Length - carInformation.CarNumber.Length);
             }
             TransilateToGeorgian(fineText,out latinText);
-            var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.SingleAsync(x => x.ReceiptNumber == latinText);
-            if (receivedSms == null) throw new NoReceivedSmsOnThisReceiptNumberException();
+            var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
+            if (receivedSms == null) continue;
             
             receivedSms.FineStatus = fineData.Paid ? Domain.Enums.FineStatus.Paid : Domain.Enums.FineStatus.Unpaid;
 
             await _unitOfWorkRepository.ReceivedSmsRepository.UpdateAsync(receivedSms);
         }
-        await _unitOfWorkRepository.SaveAsync();
+
+       if(_unitOfWorkRepository.ReceivedSmsRepository.StateChanged())
+            await _unitOfWorkRepository.SaveAsync();
+       throw new InvalidOperationException("Can't Process Data");
     }
 
     void TransilateToGeorgian(string georgianText,out string eglishText)

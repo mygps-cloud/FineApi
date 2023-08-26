@@ -62,7 +62,12 @@ public class GenericRepository<T>:IGenericRepository<T> where T : class
             item.CurrentValues.SetValues(entity);
             return ValueTask.CompletedTask;
     }
-
+    public bool StateChanged()
+    {
+        var result=_context.ChangeTracker.HasChanges();
+        
+        return result ? true : false;
+    }
     async Task<bool> IGenericRepository<T>.AnyAsync(Expression<Func<T, bool>> predicate)
     {
         return await _set.AnyAsync(predicate);

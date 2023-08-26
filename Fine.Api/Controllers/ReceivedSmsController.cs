@@ -30,7 +30,7 @@ public class ReceivedSmsController : ControllerBase
             await _receivedSmsService.UpdateReceivedSms(result);
             return Ok(new {message = "Fine Status Updated Succesfully",data = "updated"});
         }
-        catch (NoReceivedSmsOnThisReceiptNumberException ex)
+        catch (InvalidOperationException ex)
         {
             return BadRequest(ex.Message);
         }
