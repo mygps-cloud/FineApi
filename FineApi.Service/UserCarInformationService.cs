@@ -14,7 +14,7 @@ public class UserCarInformationService : IUserCarInformationService
     {
         _unitOfWorkRepository = unitOfWorkRepository;
     }
-    public async ValueTask<UserCarInformationDto> GetAllUserCarInformation(bool next)
+    public async ValueTask<UserCarInformationDto> GetAllUserCarInformation(NextCarDTO next)
     {
         if (!userCars.Any())
         {
@@ -30,15 +30,16 @@ public class UserCarInformationService : IUserCarInformationService
         
             if (!userCars.Any()) throw new NoUserCarInformationException();
         }
-        if (!next)
+        if (!next.Gotonext)
         {
-            incrimentDta = 1;
-            return userCars[incrimentDta - 1];
+            if(incrimentDta<1)
+                throw new InvalidOperationException("Can't Process Data,Choose First Car");
+            return userCars[incrimentDta-1];
         }
         incrimentDta++;
         if (incrimentDta > userCars.Count)
             throw new InvalidOperationException("Can't Process Data");
-            
-            return userCars[incrimentDta-1];
+
+        return userCars[incrimentDta - 1];
     }
 }

@@ -10,5 +10,6 @@ public class AutoMapperProfiler : Profile
     public AutoMapperProfiler()
     {
         CreateMap<FineDataVm, FineDataDto>().ReverseMap();
+        CreateMap<NexCarVM, NextCarDTO>();
     }
 }

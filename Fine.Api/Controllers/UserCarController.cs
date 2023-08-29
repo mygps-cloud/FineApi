@@ -1,4 +1,7 @@
-﻿using FineApi.Domain.Abstractions;
+﻿using AutoMapper;
+using Fine.Api.VMs;
+using FineApi.Domain.Abstractions;
+using FineApi.Domain.DTOs;
 using FineApi.Service.Exception;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +11,13 @@ namespace Fine.Api.Controllers;
 //[AuthorizationFilter]
 public class UserCarController : ControllerBase
 {
+    private IMapper _mapper;
     private IUserCarInformationService _userService;
     
-    public UserCarController(IUserCarInformationService userService)
+    public UserCarController(IUserCarInformationService userService,IMapper mapper)
     {
         _userService = userService;
+        _mapper = mapper;
     }
     
     [HttpGet(nameof(GetAllUserCars))]
@@ -20,11 +25,12 @@ public class UserCarController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status417ExpectationFailed)]
-    public async Task<IActionResult> GetAllUserCars([FromQuery]bool next)
+    public async Task<IActionResult> GetAllUserCars([FromQuery]NexCarVM next)
     {
         try
         {
-            var cars = await _userService.GetAllUserCarInformation(next);
+            var result = _mapper.Map<NextCarDTO>(next);
+            var cars = await _userService.GetAllUserCarInformation(result);
             return Ok(cars);
         }
         catch (NoUserCarInformationException ex)
