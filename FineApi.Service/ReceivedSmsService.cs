@@ -34,7 +34,10 @@ public class ReceivedSmsService : IReceivedSmsService
 
        if(_unitOfWorkRepository.ReceivedSmsRepository.StateChanged())
             await _unitOfWorkRepository.SaveAsync();
-       throw new InvalidOperationException("Can't Process Data");
+       else
+       {
+           throw new InvalidOperationException("Can't Process Data");
+       }
     }
 
     void TransilateToGeorgian(string georgianText,out string eglishText)
