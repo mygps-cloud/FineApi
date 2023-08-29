@@ -34,14 +34,15 @@ public class UserCarInformationService : IUserCarInformationService
         {
             if(incrimentDta<1)
                 throw new InvalidOperationException("Can't Process Data,Choose First Car");
-            if(incrimentDta>userCars.Count)
-                throw new InvalidOperationException("Can't Process Data");
+            
             return userCars[incrimentDta-1];
         }
         incrimentDta++;
         if (incrimentDta > userCars.Count)
+        {
+            incrimentDta = 0;
             throw new InvalidOperationException("Can't Process Data");
-
+        }
         return userCars[incrimentDta - 1];
     }
 }
