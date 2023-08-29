@@ -20,11 +20,11 @@ public class UserCarController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status417ExpectationFailed)]
-    public async Task<IActionResult> GetAllUserCars()
+    public async Task<IActionResult> GetAllUserCars([FromQuery]bool next)
     {
         try
         {
-            var cars = await _userService.GetAllUserCarInformation();
+            var cars = await _userService.GetAllUserCarInformation(next);
             return Ok(cars);
         }
         catch (NoUserCarInformationException ex)

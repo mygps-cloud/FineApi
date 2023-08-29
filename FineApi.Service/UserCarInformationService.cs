@@ -14,7 +14,7 @@ public class UserCarInformationService : IUserCarInformationService
     {
         _unitOfWorkRepository = unitOfWorkRepository;
     }
-    public async ValueTask<UserCarInformationDto> GetAllUserCarInformation()
+    public async ValueTask<UserCarInformationDto> GetAllUserCarInformation(bool next)
     {
         if (!userCars.Any())
         {
@@ -29,6 +29,11 @@ public class UserCarInformationService : IUserCarInformationService
             }
         
             if (!userCars.Any()) throw new NoUserCarInformationException();
+        }
+        if (!next)
+        {
+            incrimentDta = 1;
+            return userCars[incrimentDta - 1];
         }
         incrimentDta++;
         if (incrimentDta > userCars.Count)
