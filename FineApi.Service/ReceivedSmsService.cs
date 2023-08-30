@@ -25,7 +25,9 @@ public class ReceivedSmsService : IReceivedSmsService
             }
             TransilateToGeorgian(fineText,out latinText);
             var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
-            if (receivedSms == null) continue;
+            if (receivedSms == null) 
+                _unitOfWorkRepository.
+                ;
                 //სხვა ტეიბლში გატანა სმსების ჩაწერა თუ არ არსებობს თუ არსებობს განახლება.
                 //განახლდება სტატუსი
             
