@@ -26,6 +26,8 @@ public class ReceivedSmsService : IReceivedSmsService
             TransilateToGeorgian(fineText,out latinText);
             var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
             if (receivedSms == null) continue;
+                //სხვა ტეიბლში გატანა სმსების ჩაწერა თუ არ არსებობს თუ არსებობს განახლება.
+                //განახლდება სტატუსი
             
             receivedSms.FineStatus = fineData.Paid ? Domain.Enums.FineStatus.Paid : Domain.Enums.FineStatus.Unpaid;
 
