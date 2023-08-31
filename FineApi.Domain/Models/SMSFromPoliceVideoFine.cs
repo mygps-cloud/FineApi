@@ -10,7 +10,7 @@ public class SMSFromPoliceVideoFine
     public string ReceiptNumber { get; set; }
     public string Date { get; set; }
     public string Article { get; set; }
-    public decimal? Amount { get; set; }
+    public int? Amount { get; set; }
     [Column(TypeName = "bit")]
     public bool Paid { get; set; }
 }
