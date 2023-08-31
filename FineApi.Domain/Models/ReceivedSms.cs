@@ -36,7 +36,7 @@ public class ReceivedSms
     public SmsStatus SmsStatus { get; set; }
 
     public FineStatus FineStatus { get; set; }
-
+    public SmsFinishStatus FinishStatus { get; set; } = SmsFinishStatus.Other;
     public bool Deleted { get; set; }
     public bool Sent { get; set; }
 }

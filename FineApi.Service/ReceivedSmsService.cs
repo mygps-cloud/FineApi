@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FineApi.Domain.Abstractions;
 using FineApi.Domain.DTOs;
+using FineApi.Domain.Enums;
 using FineApi.Domain.Models;
 using FineApi.Service.Exception;
 
@@ -43,19 +44,16 @@ public class ReceivedSmsService : IReceivedSmsService
                 receivedSms.CreatedDate = DateTime.Parse(fineData.Date);
                 receivedSms.Article = fineData.Article;
                 receivedSms.Sent = true;
+                receivedSms.FinishStatus = SmsFinishStatus.Finished;
                 await _unitOfWorkRepository.ReceivedSmsRepository.AddAsync(receivedSms);
-                   
                 await _unitOfWorkRepository.SaveAsync();
                 continue;
             }
             
             receivedSms.FineStatus = fineData.Paid ? Domain.Enums.FineStatus.Paid : Domain.Enums.FineStatus.Unpaid;
-
             await _unitOfWorkRepository.ReceivedSmsRepository.UpdateAsync(receivedSms);
-        }
-
-       if(_unitOfWorkRepository.ReceivedSmsRepository.StateChanged())
             await _unitOfWorkRepository.SaveAsync();
+        }
     }
 
     void TransilateToGeorgian(string georgianText,out string eglishText)
