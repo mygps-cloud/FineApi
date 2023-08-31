@@ -12,5 +12,5 @@ public class SMSFromPoliceVideoFine
     public string Article { get; set; }
     public decimal Amount { get; set; }
     [Column(TypeName = "bit")]
-    public byte Paid { get; set; }
+    public bool Paid { get; set; }
 }

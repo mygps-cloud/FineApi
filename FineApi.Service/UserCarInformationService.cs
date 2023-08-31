@@ -1,4 +1,5 @@
-﻿using FineApi.Domain.Abstractions;
+﻿using AutoMapper;
+using FineApi.Domain.Abstractions;
 using FineApi.Domain.DTOs;
 using FineApi.Service.Exception;
 using FineApi.Service.Mappers;
@@ -8,11 +9,13 @@ public class UserCarInformationService : IUserCarInformationService
 {
     static List<UserCarInformationDto> userCars = new();
     static int incrimentDta=0;
+    private readonly IMapper _mapper;
     private readonly IUnitOfWorkRepository _unitOfWorkRepository;
     
-    public UserCarInformationService(IUnitOfWorkRepository unitOfWorkRepository)
+    public UserCarInformationService(IUnitOfWorkRepository unitOfWorkRepository, IMapper mapper)
     {
         _unitOfWorkRepository = unitOfWorkRepository;
+        _mapper = mapper;
     }
     public async ValueTask<UserCarInformationDto> GetAllUserCarInformation(NextCarDTO next)
     {
@@ -25,7 +28,7 @@ public class UserCarInformationService : IUserCarInformationService
                 bool exists = await _unitOfWorkRepository.ReceivedSmsRepository.AnyAsync(x=>x.CarNumber==item.CarNumber);
             
                 if (exists)
-                    userCars.Add(UserCarInformationMapper.MapToDTO(item));
+                    userCars.Add(_mapper.Map<UserCarInformationDto>(item));
             }
         
             if (!userCars.Any()) throw new NoUserCarInformationException();

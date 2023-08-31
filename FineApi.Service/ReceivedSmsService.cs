@@ -1,14 +1,18 @@
-﻿using FineApi.Domain.Abstractions;
+﻿using AutoMapper;
+using FineApi.Domain.Abstractions;
 using FineApi.Domain.DTOs;
+using FineApi.Domain.Models;
 using FineApi.Service.Exception;
 
 namespace FineApi.Service;
 public class ReceivedSmsService : IReceivedSmsService
 {
+    private readonly IMapper _mapper;
     private readonly IUnitOfWorkRepository _unitOfWorkRepository;
-    public ReceivedSmsService(IUnitOfWorkRepository unitOfWorkRepository) 
+    public ReceivedSmsService(IUnitOfWorkRepository unitOfWorkRepository, IMapper mapper)
     {
         _unitOfWorkRepository = unitOfWorkRepository;
+        _mapper = mapper;
     }
     public async Task UpdateReceivedSms(List<FineDataDto> data)
     {
@@ -25,10 +29,24 @@ public class ReceivedSmsService : IReceivedSmsService
             }
             TransilateToGeorgian(fineText,out latinText);
             var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
-            if (receivedSms == null) 
-                _unitOfWorkRepository.
-                ;
-                //სხვა ტეიბლში გატანა სმსების ჩაწერა თუ არ არსებობს თუ არსებობს განახლება.
+            if (receivedSms == null)
+            {
+               var smsFromPoliceResult= await _unitOfWorkRepository.SmsFromPoliceFideFineRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
+               if (smsFromPoliceResult is null)
+               {
+                   await _unitOfWorkRepository.SmsFromPoliceFideFineRepository.AddAsync(
+                       _mapper.Map<SMSFromPoliceVideoFine>(fineData));
+                   
+                   await _unitOfWorkRepository.SaveAsync();
+               }
+               else
+               {
+                   smsFromPoliceResult.Paid = fineData.Paid ? true : false;
+                   await _unitOfWorkRepository.SmsFromPoliceFideFineRepository.UpdateAsync(smsFromPoliceResult);
+                   await _unitOfWorkRepository.SaveAsync();
+               }
+            }
+            //სხვა ტეიბლში გატანა სმსების ჩაწერა თუ არ არსებობს თუ არსებობს განახლება.
                 //განახლდება სტატუსი
             
             receivedSms.FineStatus = fineData.Paid ? Domain.Enums.FineStatus.Paid : Domain.Enums.FineStatus.Unpaid;

@@ -14,6 +14,8 @@ public interface IGenericRepository<T> where T : class
     Task<T> SingleAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
     public Task<IQueryable<T>> GetAll();
     public Task<T?> GetByIdAsync(int id);
+    public ValueTask AddAsync(T entity);
+    public ValueTask AddRangeAsync(List<T> entity);
     public ValueTask UpdateAsync(T entity);
     public Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
     public bool StateChanged();

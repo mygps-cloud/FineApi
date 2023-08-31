@@ -53,6 +53,11 @@ public class GenericRepository<T>:IGenericRepository<T> where T : class
     {
         return await _set.FindAsync(id);
     }
+    public async ValueTask AddAsync(T entity) =>await _set.AddAsync(entity);
+    public async ValueTask AddRangeAsync(List<T> entity)
+    {
+        await _set.AddRangeAsync(entity);
+    }
 
     public ValueTask UpdateAsync(T entity)
     {
