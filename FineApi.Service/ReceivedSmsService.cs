@@ -31,23 +31,24 @@ public class ReceivedSmsService : IReceivedSmsService
             var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
             if (receivedSms == null)
             {
-               var smsFromPoliceResult= await _unitOfWorkRepository.SmsFromPoliceFideFineRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
+                fineData.ReceiptNumber = latinText;
+                var smsFromPoliceResult= await _unitOfWorkRepository.SmsFromPoliceFideFineRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
                if (smsFromPoliceResult is null)
                {
                    await _unitOfWorkRepository.SmsFromPoliceFideFineRepository.AddAsync(
                        _mapper.Map<SMSFromPoliceVideoFine>(fineData));
                    
                    await _unitOfWorkRepository.SaveAsync();
+                   continue;
                }
                else
                {
                    smsFromPoliceResult.Paid = fineData.Paid ? true : false;
                    await _unitOfWorkRepository.SmsFromPoliceFideFineRepository.UpdateAsync(smsFromPoliceResult);
                    await _unitOfWorkRepository.SaveAsync();
+                   continue;
                }
             }
-            //სხვა ტეიბლში გატანა სმსების ჩაწერა თუ არ არსებობს თუ არსებობს განახლება.
-                //განახლდება სტატუსი
             
             receivedSms.FineStatus = fineData.Paid ? Domain.Enums.FineStatus.Paid : Domain.Enums.FineStatus.Unpaid;
 
@@ -56,10 +57,6 @@ public class ReceivedSmsService : IReceivedSmsService
 
        if(_unitOfWorkRepository.ReceivedSmsRepository.StateChanged())
             await _unitOfWorkRepository.SaveAsync();
-       else
-       {
-           throw new InvalidOperationException("Can't Process Data");
-       }
     }
 
     void TransilateToGeorgian(string georgianText,out string eglishText)
