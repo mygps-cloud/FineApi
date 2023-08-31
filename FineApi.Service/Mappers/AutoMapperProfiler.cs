@@ -8,7 +8,7 @@ public class AutoMapperProfiler : Profile
 {
     public AutoMapperProfiler()
     {
-        CreateMap<FineDataDto, SMSFromPoliceVideoFine>().ReverseMap();
+        CreateMap<FineDataDto, ReceivedSms>().ReverseMap();
         CreateMap<UserCarInformation, UserCarInformationDto>().ReverseMap();
     }
 }

@@ -38,5 +38,6 @@ public class ReceivedSms
     public FineStatus FineStatus { get; set; }
 
     public bool Deleted { get; set; }
+    public bool Sent { get; set; }
 }
 

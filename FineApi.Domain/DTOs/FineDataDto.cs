@@ -1,6 +1,8 @@
-﻿namespace FineApi.Domain.DTOs;
+﻿using FineApi.Domain.Enums;
 
-public record FineDataDto(string Date, string Article, int? Amount, bool Paid)
+namespace FineApi.Domain.DTOs;
+
+public record FineDataDto(string Date, string Article, int? Amount, bool  Paid)
 {
     public string ReceiptNumber { get; set; }
 };

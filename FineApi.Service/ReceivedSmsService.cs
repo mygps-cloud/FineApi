@@ -31,23 +31,22 @@ public class ReceivedSmsService : IReceivedSmsService
             var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
             if (receivedSms == null)
             {
+                receivedSms = new ReceivedSms();
                 fineData.ReceiptNumber = latinText;
-                var smsFromPoliceResult= await _unitOfWorkRepository.SmsFromPoliceFideFineRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
-               if (smsFromPoliceResult is null)
-               {
-                   await _unitOfWorkRepository.SmsFromPoliceFideFineRepository.AddAsync(
-                       _mapper.Map<SMSFromPoliceVideoFine>(fineData));
+                receivedSms.FineStatus = fineData.Paid == true ? Domain.Enums.FineStatus.Paid : Domain.Enums.FineStatus.Unpaid;
+                receivedSms.ReceiptNumber = fineData.ReceiptNumber;
+                receivedSms.Amount = fineData.Amount;
+                receivedSms.Deleted = true;
+                receivedSms.Parsed = true;
+                receivedSms.Sender = "POLICE";
+                receivedSms.Term = 30;
+                receivedSms.CreatedDate = DateTime.Parse(fineData.Date);
+                receivedSms.Article = fineData.Article;
+                receivedSms.Sent = true;
+                await _unitOfWorkRepository.ReceivedSmsRepository.AddAsync(receivedSms);
                    
-                   await _unitOfWorkRepository.SaveAsync();
-                   continue;
-               }
-               else
-               {
-                   smsFromPoliceResult.Paid = fineData.Paid ? true : false;
-                   await _unitOfWorkRepository.SmsFromPoliceFideFineRepository.UpdateAsync(smsFromPoliceResult);
-                   await _unitOfWorkRepository.SaveAsync();
-                   continue;
-               }
+                await _unitOfWorkRepository.SaveAsync();
+                continue;
             }
             
             receivedSms.FineStatus = fineData.Paid ? Domain.Enums.FineStatus.Paid : Domain.Enums.FineStatus.Unpaid;
