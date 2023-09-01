@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Globalization;
+using AutoMapper;
 using FineApi.Domain.Abstractions;
 using FineApi.Domain.DTOs;
 using FineApi.Domain.Enums;
@@ -19,14 +20,19 @@ public class ReceivedSmsService : IReceivedSmsService
     {
         string latinText;
         string fineText="";
+        string carnumber="";
         var userCarInformation = await _unitOfWorkRepository.UserCarInformationRepository.GetAll()!;
         foreach (var fineData in data)
         {
             foreach (var carInformation in userCarInformation)
             {
-                if (fineData.ReceiptNumber.Contains(carInformation.CarNumber)) 
+                if (fineData.ReceiptNumber.Contains(carInformation.CarNumber))
+                {
                     fineText=fineData.ReceiptNumber.Substring(0,
                         fineData.ReceiptNumber.Length - carInformation.CarNumber.Length);
+                    carnumber = carInformation.CarNumber;
+                }
+                   
             }
             TransilateToGeorgian(fineText,out latinText);
             var receivedSms = await _unitOfWorkRepository.ReceivedSmsRepository.FirstOrDefaultAsync(x => x.ReceiptNumber == latinText);
@@ -40,10 +46,13 @@ public class ReceivedSmsService : IReceivedSmsService
                 receivedSms.Deleted = true;
                 receivedSms.Parsed = true;
                 receivedSms.Sender = "POLICE";
+                receivedSms.Street = "adgilmdebareoba ucnobia";
                 receivedSms.Term = 30;
-                receivedSms.CreatedDate = DateTime.Parse(fineData.Date);
+                receivedSms.DateOfFine=receivedSms.CreatedDate = DateTime.ParseExact(fineData.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                receivedSms.CreatedDate = DateTime.Now;
                 receivedSms.Article = fineData.Article;
                 receivedSms.Sent = true;
+                receivedSms.CarNumber = carnumber;
                 receivedSms.FinishStatus = SmsFinishStatus.Finished;
                 await _unitOfWorkRepository.ReceivedSmsRepository.AddAsync(receivedSms);
                 await _unitOfWorkRepository.SaveAsync();
