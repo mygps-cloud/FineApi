@@ -25,10 +25,7 @@ public class UserCarInformationService : IUserCarInformationService
         
             foreach(var item in userCarInformation)
             {
-                bool exists = await _unitOfWorkRepository.ReceivedSmsRepository.AnyAsync(x=>x.CarNumber==item.CarNumber);
-            
-                if (exists)
-                    userCars.Add(_mapper.Map<UserCarInformationDto>(item));
+                userCars.Add(_mapper.Map<UserCarInformationDto>(item));
             }
         
             if (!userCars.Any()) throw new NoUserCarInformationException();

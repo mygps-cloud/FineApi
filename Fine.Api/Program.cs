@@ -9,7 +9,7 @@ builder.Services.AddCors((options) =>
 {
     options.AddPolicy("DevCors", (corsBuilder) =>
     {
-        // angular			react			vue 
+                                        // angular			           react			                vue 
         corsBuilder.WithOrigins("https://localhost:4200", "https://localhost:3000", "https://localhost:8000")
             .AllowAnyMethod()
             .AllowAnyHeader()
@@ -18,7 +18,7 @@ builder.Services.AddCors((options) =>
 
     options.AddPolicy("ProdCors", (corsBuilder) =>
     {
-        corsBuilder.WithOrigins("https://MyProductionSite.Com")
+        corsBuilder.WithOrigins("https://fine.mygps.ge:4437")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -47,7 +47,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseCors("DevCors");
 }
-
+app.UseCors("DevCors");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
