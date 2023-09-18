@@ -8,5 +8,6 @@ public class UserCarInformation
     public string CarNumber { get; set; }
     public string TechPassportId { get; set; }
     public int? CompanyId { get; set; }
+    public Company? Company { get; set; }
 }
 

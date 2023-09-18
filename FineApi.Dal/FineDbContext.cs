@@ -12,5 +12,5 @@ public class FineDbContext : DbContext
     }
     public DbSet<UserCarInformation> UserCarInformation { get; set; }
     public DbSet<ReceivedSms> ReceivedSms { get; set; }
-    public DbSet<SMSFromPoliceVideoFine> SMSFromPoliceVideoFine { get; set; }
+    public DbSet<Company> Company { get; set; }
 }

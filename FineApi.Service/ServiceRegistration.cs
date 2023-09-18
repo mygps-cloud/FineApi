@@ -10,6 +10,7 @@ public static class ServiceRegistration
     {
         services.AddScoped<IUserCarInformationService,UserCarInformationService>();
         services.AddScoped<IReceivedSmsService, ReceivedSmsService>();
+        services.AddScoped<IEmailSenderService, EmailSenderService>();
         return services;
     }
 }
