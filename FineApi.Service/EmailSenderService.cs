@@ -22,14 +22,13 @@ public class EmailSenderService:IEmailSenderService
         var receivedSms = _unitOfWorkRepository.ReceivedSmsRepository.Set.Where(s => s.FineStatus==FineStatus.Unpaid);
         var User = _unitOfWorkRepository.EmailSenderRepository
             .Set
-            .Include(company => company.UserCarInformation) // Include the related UserCarInformation
+            .Include(company => company.UserCarInformation) 
             .Select(company => new
             {
                 company.Email,
                 UserCarInformation = company.UserCarInformation.Select(userCarInfo => new
                 {
                     userCarInfo.CarNumber,
-                    // Other properties you want to select from UserCarInformation
                 })
             })
             .ToList();

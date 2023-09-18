@@ -18,7 +18,7 @@ public class EmailController:ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> SendEmail()
     {
-        _emailSenderService.SendEmail();
+        await _emailSenderService.SendEmail();
         return Ok();
     }
 }
