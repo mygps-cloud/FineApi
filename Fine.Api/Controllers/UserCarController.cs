@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Fine.Api.Filters;
 using Fine.Api.VMs;
 using FineApi.Domain.Abstractions;
 using FineApi.Domain.DTOs;
