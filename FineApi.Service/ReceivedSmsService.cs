@@ -48,7 +48,13 @@ public class ReceivedSmsService : IReceivedSmsService
                 receivedSms.Sender = "POLICE";
                 receivedSms.Street = "adgilmdebareoba ucnobia";
                 receivedSms.Term = 30;
-                receivedSms.DateOfFine=receivedSms.CreatedDate = DateTime.ParseExact(fineData.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                DateTimeOffset? DateOfFine = DateTimeOffset.ParseExact(fineData.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                if (DateOfFine.HasValue)
+                {
+                    DateTimeOffset? LastDateOfPayment = DateOfFine.Value.AddDays(30);
+                    receivedSms.DateOfFine = DateOfFine;
+                    receivedSms.LastDateOfPayment = LastDateOfPayment;
+                }
                 receivedSms.CreatedDate = DateTime.Now;
                 receivedSms.Article = fineData.Article;
                 receivedSms.Sent = true;
