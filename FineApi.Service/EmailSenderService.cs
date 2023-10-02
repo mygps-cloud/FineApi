@@ -21,6 +21,7 @@ public class EmailSenderService:IEmailSenderService
     public async Task SendEmail()
     {
         var receivedSms = _unitOfWorkRepository.ReceivedSmsRepository.Set.Where(s => s.FineStatus==FineStatus.Unpaid);
+        
         var User = _unitOfWorkRepository.EmailSenderRepository
             .Set
             .Include(company => company.UserCarInformation) 
@@ -41,7 +42,6 @@ public class EmailSenderService:IEmailSenderService
                 List<(string, string,string)> carNumbersAndReceiptNumber = new List<(string, string,string)>();
                 foreach (var user in item.UserCarInformation)
                 {
-                    
                     foreach (var sms in receivedSms)
                     {
                         if (sms.CarNumber.Equals(user.CarNumber))
@@ -50,7 +50,8 @@ public class EmailSenderService:IEmailSenderService
                         }
                     }
                 }
-                SendMessage(item.Email, carNumbersAndReceiptNumber);
+                if(carNumbersAndReceiptNumber.Any())
+                    SendMessage(item.Email, carNumbersAndReceiptNumber);
             }
         }
         
