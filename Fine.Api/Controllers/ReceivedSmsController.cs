@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using Fine.Api.Filters;
 using Fine.Api.VMs;
 using Microsoft.AspNetCore.Mvc;
 using FineApi.Domain.Abstractions;
 using FineApi.Domain.DTOs;
-using FineApi.Service.Exception;
 
 namespace Fine.Api.Controllers;
 [Route("api/[controller]")]

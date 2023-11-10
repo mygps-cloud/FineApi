@@ -50,7 +50,8 @@ public class EmailSenderService:IEmailSenderService
                         }
                     }
                 }
-                if(carNumbersAndReceiptNumber.Any())
+
+                if (carNumbersAndReceiptNumber.Any())
                     SendMessage(item.Email, carNumbersAndReceiptNumber);
             }
         }

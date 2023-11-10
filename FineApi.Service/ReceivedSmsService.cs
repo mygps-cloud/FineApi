@@ -47,6 +47,8 @@ public class ReceivedSmsService : IReceivedSmsService
                 receivedSms.Parsed = true;
                 receivedSms.Sender = "POLICE";
                 receivedSms.Street = "adgilmdebareoba ucnobia";
+                receivedSms.Text =
+                    $"tkven kutvnilebashi myofi avtomobili nomrit {carnumber} dajarimda {fineData.Amount}larit qvitris nomeria {latinText} damatebiti informaciistvis ewviet chvens saits";
                 receivedSms.Term = 30;
                 DateTimeOffset? DateOfFine = DateTimeOffset.ParseExact(fineData.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
                 if (DateOfFine.HasValue)
@@ -57,7 +59,7 @@ public class ReceivedSmsService : IReceivedSmsService
                 }
                 receivedSms.CreatedDate = DateTime.Now;
                 receivedSms.Article = fineData.Article;
-                receivedSms.Sent = true;
+                receivedSms.Sent = false;
                 receivedSms.CarNumber = carnumber;
                 receivedSms.FinishStatus = SmsFinishStatus.Finished;
                 await _unitOfWorkRepository.ReceivedSmsRepository.AddAsync(receivedSms);
