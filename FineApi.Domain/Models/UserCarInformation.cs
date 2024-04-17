@@ -8,7 +8,7 @@ public class UserCarInformation
     public  string CarNumber { get; set; }
     public  string? TechPassportId { get; set; }
     public  int? CompanyId { get; set; }
-
     public CreatorsInfo? CreatorsInfo { get; set; }
+    public List<Logs>? Logs { get; set; }
 }
 
