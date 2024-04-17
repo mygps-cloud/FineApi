@@ -2,7 +2,6 @@
 using FineApi.Domain.Abstractions;
 using FineApi.Domain.DTOs;
 using FineApi.Service.Exception;
-using FineApi.Service.Mappers;
 
 namespace FineApi.Service;
 public class UserCarInformationService : IUserCarInformationService
@@ -21,7 +20,7 @@ public class UserCarInformationService : IUserCarInformationService
     {
         if (!userCars.Any())
         {
-            var userCarInformation = await _unitOfWorkRepository.UserCarInformationRepository.GetAll()!;
+            var userCarInformation = await _unitOfWorkRepository.UserCarInformationRepository.GetAllCarsCanBePoliceCheck()!;
         
             foreach(var item in userCarInformation)
             {
@@ -38,6 +37,7 @@ public class UserCarInformationService : IUserCarInformationService
             return userCars[incrimentDta-1];
         }
         incrimentDta++;
+        
         if (incrimentDta > userCars.Count)
         {
             incrimentDta = 0;

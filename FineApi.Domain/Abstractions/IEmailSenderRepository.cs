@@ -2,7 +2,7 @@
 
 namespace FineApi.Domain.Abstractions;
 
-public interface IEmailSenderRepository:IGenericRepository<Company>
+public interface IEmailSenderRepository:IGenericRepository<CreatorsInfo>
 {
     
 }

@@ -9,12 +9,10 @@ namespace FineApi.Service;
 
 public class EmailSenderService:IEmailSenderService
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWorkRepository _unitOfWorkRepository;
 
-    public EmailSenderService(IMapper mapper, IUnitOfWorkRepository unitOfWorkRepository)
+    public EmailSenderService(IUnitOfWorkRepository unitOfWorkRepository)
     {
-        _mapper = mapper;
         _unitOfWorkRepository = unitOfWorkRepository;
     }
 
@@ -65,13 +63,13 @@ public class EmailSenderService:IEmailSenderService
         {
             result.Append("მანქანა:"+car.Item1);
             result.Append(", ქვითრის ნომერი: "+car.Item2);
-            result.AppendLine(", თანხა: " + car.Item3+". ");
+            result.AppendLine(", თანხა: " + car.Item3);
             result.AppendLine();
         }
 
         string finalResult = result.ToString();
         var subject = "ჯარიმა";
-        var body=$"MyGps გატყობინებთ:გთხოვთ დროულად დაფაროთ თქვენს კუთვნილებაში მყოფი ავტომობილის ჯარიმა {finalResult}.";
+        var body=$"MyGps გატყობინებთ: გთხოვთ დროულად დაფაროთ თქვენს კუთვნილებაში მყოფი ავტომობილის ჯარიმა {finalResult}.";
         var username = "noreply3@mygps.ge";
         var pw = "sgpzhupqepdtcpob";
         MailMessage mail = new MailMessage();

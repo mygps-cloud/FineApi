@@ -4,28 +4,6 @@ using FineApi.Service;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddCors((options) =>
-{
-    options.AddPolicy("DevCors", (corsBuilder) =>
-    {
-                                        // angular			           react			                vue 
-        corsBuilder.WithOrigins("https://localhost:4200", "https://localhost:3000", "https://localhost:8000")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
-    });
-
-    options.AddPolicy("ProdCors", (corsBuilder) =>
-    {
-        corsBuilder.WithOrigins("https://fine.mygps.ge:4437")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
-    });
-});
-
-
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceService(builder.Configuration);
 builder.Services.AddServices(builder.Configuration);
@@ -47,7 +25,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseCors("DevCors");
 }
-app.UseCors("DevCors");
+app.UseCors(cors =>
+{
+    cors.WithOrigins("*")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+});
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
