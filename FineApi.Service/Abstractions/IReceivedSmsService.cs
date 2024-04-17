@@ -1,6 +1,6 @@
-﻿using FineApi.Domain.DTOs;
+﻿using FineApi.Service.DTOs;
 
-namespace FineApi.Domain.Abstractions;
+namespace FineApi.Service.Abstractions;
 public interface IReceivedSmsService
 {
     Task UpdateReceivedSms(List<FineDataDto> data);

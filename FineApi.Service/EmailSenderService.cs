@@ -1,13 +1,12 @@
 ﻿using System.Net.Mail;
 using System.Text;
-using AutoMapper;
-using FineApi.Domain.Abstractions;
 using FineApi.Domain.Enums;
+using FineApi.Service.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace FineApi.Service;
 
-public class EmailSenderService:IEmailSenderService
+internal class EmailSenderService:IEmailSenderService
 {
     private readonly IUnitOfWorkRepository _unitOfWorkRepository;
 

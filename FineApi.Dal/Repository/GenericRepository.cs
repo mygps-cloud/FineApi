@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using FineApi.Domain.Abstractions;
+using FineApi.Service.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace FineApi.Dal.Repository;

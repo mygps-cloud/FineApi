@@ -1,5 +1,5 @@
-﻿using FineApi.Domain.Abstractions;
-using FineApi.Domain.Models;
+﻿using FineApi.Domain.Models;
+using FineApi.Service.Abstractions;
 
 namespace FineApi.Dal.Repository;
 

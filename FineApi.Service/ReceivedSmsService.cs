@@ -1,20 +1,16 @@
 ﻿using System.Globalization;
-using AutoMapper;
-using FineApi.Domain.Abstractions;
-using FineApi.Domain.DTOs;
 using FineApi.Domain.Enums;
 using FineApi.Domain.Models;
-using FineApi.Service.Exception;
+using FineApi.Service.Abstractions;
+using FineApi.Service.DTOs;
 
 namespace FineApi.Service;
-public class ReceivedSmsService : IReceivedSmsService
+internal class ReceivedSmsService : IReceivedSmsService
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWorkRepository _unitOfWorkRepository;
-    public ReceivedSmsService(IUnitOfWorkRepository unitOfWorkRepository, IMapper mapper)
+    public ReceivedSmsService(IUnitOfWorkRepository unitOfWorkRepository)
     {
         _unitOfWorkRepository = unitOfWorkRepository;
-        _mapper = mapper;
     }
     public async Task UpdateReceivedSms(List<FineDataDto> data)
     {

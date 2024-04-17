@@ -1,4 +1,4 @@
-﻿using FineApi.Domain.Abstractions;
+﻿using FineApi.Service.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +11,7 @@ public static class ServiceRegistration
         services.AddScoped<IUserCarInformationService,UserCarInformationService>();
         services.AddScoped<IReceivedSmsService, ReceivedSmsService>();
         services.AddScoped<IEmailSenderService, EmailSenderService>();
+        services.AddScoped<ILoggerService, LoggerService>();
         return services;
     }
 }

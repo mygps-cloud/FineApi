@@ -1,4 +1,4 @@
-﻿namespace FineApi.Domain.Abstractions;
+﻿namespace FineApi.Service.Abstractions;
 
 public interface IEmailSenderService
 {

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace FineApi.Domain.Abstractions;
+namespace FineApi.Service.Abstractions;
 public interface IGenericRepository<T> where T : class
 {
     IQueryable<T?> Set { get; }

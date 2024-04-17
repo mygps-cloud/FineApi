@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\FineApi.Domain\FineApi.Domain.csproj" />
+      <ProjectReference Include="..\FineApi.Service\FineApi.Service.csproj" />
     </ItemGroup>
 
     <ItemGroup>

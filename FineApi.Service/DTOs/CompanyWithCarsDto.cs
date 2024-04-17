@@ -1,4 +1,4 @@
-﻿namespace FineApi.Domain.DTOs;
+﻿namespace FineApi.Service.DTOs;
 
 public class CompanyWithCarsDto
 {

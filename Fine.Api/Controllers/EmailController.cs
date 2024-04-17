@@ -1,4 +1,4 @@
-﻿using FineApi.Domain.Abstractions;
+﻿using FineApi.Service.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fine.Api.Controllers;

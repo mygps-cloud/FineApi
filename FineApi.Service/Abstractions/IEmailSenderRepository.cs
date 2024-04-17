@@ -1,6 +1,6 @@
 ﻿using FineApi.Domain.Models;
 
-namespace FineApi.Domain.Abstractions;
+namespace FineApi.Service.Abstractions;
 
 public interface IEmailSenderRepository:IGenericRepository<CreatorsInfo>
 {

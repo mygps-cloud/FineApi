@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using FineApi.Domain.DTOs;
 using FineApi.Domain.Models;
+using FineApi.Service.DTOs;
 
 namespace FineApi.Service.Mappers;
 

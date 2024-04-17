@@ -1,4 +1,4 @@
-﻿using FineApi.Domain.Abstractions;
+﻿using FineApi.Service.Abstractions;
 
 namespace FineApi.Dal.Repository
 {
@@ -9,6 +9,7 @@ namespace FineApi.Dal.Repository
         private IEmailSenderRepository _emailSenderRepository;
         private IReceivedSmsRepository _receivedSmsRepository;
         private ISMSFromPoliceFideFineRepository _receivedIsmsRepository;
+        private ILoggerRepository _loggerRepository;
         public UnitOfWorkRepository(FineDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -18,6 +19,7 @@ namespace FineApi.Dal.Repository
         public IEmailSenderRepository EmailSenderRepository => _emailSenderRepository ??= new EmailSenderRepository(_dbContext);
         public IReceivedSmsRepository ReceivedSmsRepository => _receivedSmsRepository ??= new ReceivedSmsRepository(_dbContext);
         public ISMSFromPoliceFideFineRepository SmsFromPoliceFideFineRepository => _receivedIsmsRepository ??= new SmsFromPoliceFideFineRepository(_dbContext);
+        public ILoggerRepository LoggerRepository => _loggerRepository ??= new LoggerRepository(_dbContext);
         public Task<int> SaveAsync() => _dbContext.SaveChangesAsync();
         public int Save() => _dbContext.SaveChanges();
         public void Dispose()=> _dbContext.Dispose();

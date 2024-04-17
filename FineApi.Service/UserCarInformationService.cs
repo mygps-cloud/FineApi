@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using FineApi.Domain.Abstractions;
-using FineApi.Domain.DTOs;
+using FineApi.Service.Abstractions;
+using FineApi.Service.DTOs;
 using FineApi.Service.Exception;
 
 namespace FineApi.Service;
-public class UserCarInformationService : IUserCarInformationService
+internal class UserCarInformationService : IUserCarInformationService
 {
     static List<UserCarInformationDto> userCars = new();
     static int incrimentDta=0;
