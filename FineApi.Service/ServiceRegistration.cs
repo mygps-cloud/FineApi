@@ -1,4 +1,5 @@
 ﻿using FineApi.Service.Abstractions;
+using FineApi.Service.SendNotification;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,8 +11,9 @@ public static class ServiceRegistration
     {
         services.AddScoped<IUserCarInformationService,UserCarInformationService>();
         services.AddScoped<IReceivedSmsService, ReceivedSmsService>();
-        services.AddScoped<IEmailSenderService, EmailSenderService>();
+        services.AddScoped<INotificationServiceManager, NotificationServiceManager>();
         services.AddScoped<ILoggerService, LoggerService>();
+        services.AddScoped<ISmsSenderService, SmsSenderService>();
         return services;
     }
 }

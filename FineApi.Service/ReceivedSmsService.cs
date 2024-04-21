@@ -18,6 +18,9 @@ internal class ReceivedSmsService : IReceivedSmsService
         string fineText="";
         string carnumber="";
         var userCarInformation = await _unitOfWorkRepository.UserCarInformationRepository.GetAll()!;
+        var fine = await _unitOfWorkRepository.LoggerRepository.FirstOrDefaultAsync(x=>x.UserCarInformation.CarNumber==data.First().ReceiptNumber);
+        if(fine is not null)
+            await _unitOfWorkRepository.LoggerRepository.Remove(fine);
         foreach (var fineData in data)
         {
             foreach (var carInformation in userCarInformation)

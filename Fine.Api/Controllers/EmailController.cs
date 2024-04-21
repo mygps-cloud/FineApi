@@ -6,10 +6,10 @@ namespace Fine.Api.Controllers;
 [ApiController]
 public class EmailController:ControllerBase
 {
-    private readonly IEmailSenderService _emailSenderService;
-    public EmailController(IEmailSenderService emailSenderService)
+    private readonly INotificationServiceManager _notificationServiceManager;
+    public EmailController(INotificationServiceManager notificationServiceManager)
     {
-        _emailSenderService = emailSenderService;
+        _notificationServiceManager = notificationServiceManager;
     }
     
     [HttpPost(nameof(SendEmail))]
@@ -18,7 +18,7 @@ public class EmailController:ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> SendEmail()
     {
-        await _emailSenderService.SendEmail();
+        await _notificationServiceManager.SendEmail();
         return Ok();
     }
 }

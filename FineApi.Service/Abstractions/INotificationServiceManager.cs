@@ -1,6 +1,6 @@
 ﻿namespace FineApi.Service.Abstractions;
 
-public interface IEmailSenderService
+public interface INotificationServiceManager
 {
     Task SendEmail();
 }

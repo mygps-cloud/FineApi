@@ -61,11 +61,11 @@ public class GenericRepository<T>:IGenericRepository<T> where T : class
 
     public ValueTask UpdateAsync(T entity)
     {
-            _set.Attach(entity);
-            var item = _context.Entry(entity);
-            item.State = EntityState.Modified;
-            item.CurrentValues.SetValues(entity);
-            return ValueTask.CompletedTask;
+        _set.Attach(entity);
+        var item = _context.Entry(entity);
+        item.State = EntityState.Modified;
+        item.CurrentValues.SetValues(entity);
+        return ValueTask.CompletedTask;
     }
     public bool StateChanged()
     {
@@ -76,5 +76,11 @@ public class GenericRepository<T>:IGenericRepository<T> where T : class
     async Task<bool> IGenericRepository<T>.AnyAsync(Expression<Func<T, bool>> predicate)
     {
         return await _set.AnyAsync(predicate);
+    }
+    public ValueTask Remove(T entity)
+    {
+        _set.Attach(entity);
+        _set.Remove(entity);
+        return ValueTask.CompletedTask;
     }
 }

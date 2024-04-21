@@ -23,8 +23,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors("DevCors");
 }
+
+app.UseRouting();
+
 app.UseCors(cors =>
 {
     cors.WithOrigins("*")
@@ -32,16 +34,9 @@ app.UseCors(cors =>
         .AllowAnyMethod();
 });
 
-app.UseHttpsRedirection();
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-try
-{
-    app.Run();
-}
-catch (Exception ex)
-{
-	throw;
-}
+
+
+app.Run();
