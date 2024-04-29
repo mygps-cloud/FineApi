@@ -18,9 +18,15 @@ internal class ReceivedSmsService : IReceivedSmsService
         string fineText="";
         string carnumber="";
         var userCarInformation = await _unitOfWorkRepository.UserCarInformationRepository.GetAll()!;
-        var fine = await _unitOfWorkRepository.LoggerRepository.FirstOrDefaultAsync(x=>x.UserCarInformation.CarNumber==data.First().ReceiptNumber);
-        if(fine is not null)
+        var fine = await _unitOfWorkRepository.LoggerRepository.FirstOrDefaultAsync(x=>x.UserCarInformation.CarNumber==data.First().ReceiptNumber.Substring(data.First().ReceiptNumber.Length-7));
+        
+        if (fine is not null)
+        {
             await _unitOfWorkRepository.LoggerRepository.Remove(fine);
+            await _unitOfWorkRepository.SaveAsync();
+            Console.WriteLine("Successfully Deleted");
+        }
+        
         foreach (var fineData in data)
         {
             foreach (var carInformation in userCarInformation)
