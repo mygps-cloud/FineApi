@@ -2,7 +2,7 @@
 using FineApi.Service.Abstractions;
 using FineApi.Service.DTOs;
 
-namespace FineApi.Service;
+namespace FineApi.Service.Logger;
 
 public class LoggerService:ILoggerService
 {

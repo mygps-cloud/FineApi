@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using FineApi.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FineApi.Dal;
 public class FineDbContext : DbContext
